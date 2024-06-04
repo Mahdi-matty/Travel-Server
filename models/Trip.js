@@ -1,6 +1,6 @@
 const { Schema, model, models } =require ("mongoose");
 
-const MarkSchema = new Schema({
+const TripSchema = new Schema({
     user: {type: Schema.Types.ObjectId, ref: 'User', required: true},
     item: {
         type: { type: String, enum: ['Flight', 'Rideshare', 'Train', 'Bus'], required: true },
@@ -9,6 +9,6 @@ const MarkSchema = new Schema({
     createdAt: { type: Date, default: Date.now }
 })
 
-const Mark = models.Mark || model('Mark', MarkSchema)
+const Trip = models.Trip || model('Trip', TripSchema)
 
-module.exports = Mark
+module.exports = Trip

@@ -1,9 +1,9 @@
-import { connectToDB } from "../middleware/database";
-import User from "../models/User";
+const { connectToDB } = require("../middleware/database");
+const User = require("../models/User");
 const jwt = require('jsonwebtoken')
 
 module.exports = {
-    async login(req, res) {
+    async Login(req, res) {
         try {
             const { username, password } = req.body
             await connectToDB()
@@ -55,5 +55,23 @@ module.exports = {
             const errorMessage = JSON.stringify({ msg: "Internal Server Error" });
             return new Response(errorMessage, { status: 500, headers: { "Content-Type": "application/json" } });
         }
-    }
+    },
+    async UpdateUser(req, res) {
+        try {
+            await connectToDB()
+            const user = await User.findOneAndUpdate(
+                { _id: req.params.userId },
+                { $set: req.body },
+                { runValidators: true, new: true }
+            );
+
+            if (!user) {
+                return res.status(404).json({ message: 'No user with this id!' });
+            }
+
+            res.json(user);
+        } catch (error) {
+            console.log(error)
+        }
+    },
 }

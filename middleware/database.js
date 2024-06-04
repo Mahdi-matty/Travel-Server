@@ -1,8 +1,8 @@
-import mongoose from "mongoose";
+const mongoose =require("mongoose");
 
 let isConnected = false
 
-export const connectToDB = async () => {
+ const connectToDB = async () => {
     mongoose.set('strictQuery', true);
 
     if (isConnected) {
@@ -22,3 +22,5 @@ export const connectToDB = async () => {
         throw error
     }
 }
+
+module.exports = connectToDB()
